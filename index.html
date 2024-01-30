@@ -1,0 +1,43 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node.js HTML Example</title>
+</head>
+<body>
+  <h1>Node.js HTML Example</h1>
+
+  <form id="myForm">
+    <label for="textInput">Enter Text:</label>
+    <input type="text" id="textInput" name="textData" required>
+    <button type="button" onclick="submitForm()">Submit</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    function submitForm() {
+      var textData = document.getElementById('textInput').value;
+
+      // Make a POST request to the server
+      fetch('/submitText', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ textData: textData }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('result').innerText = data.message;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+  </script>
+</body>
+</html>
